@@ -1,6 +1,10 @@
 package fr.demos.formation.web;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -43,6 +47,9 @@ public class SaisieInscription extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		List<String> erreursList = new ArrayList<String>();
+		Map<String, String> erreurs = new HashMap<String, String>();
+		
 		String action = request.getParameter("valider");
 		if (action != null && action.equals("Valider")) {
 
@@ -50,31 +57,46 @@ public class SaisieInscription extends HttpServlet {
 			String prenom = request.getParameter("prenom");
 			String ageString = request.getParameter("age");
 
-			String erreur;
-			
+			String message = "";
+
 			int age = 0;
 
 			try {
 				age = Integer.parseInt(ageString);
 			} catch (NumberFormatException ex) {
-
+				erreursList.add("L age entre n est pas au bon format");
+				erreurs.put("age", "Le format de l'age n'est pas le bon");
 			}
 
 			if (nom == null || nom.equals("")) {
-				erreur = "Vous devez saisir un nom";
-				request.setAttribute("erreur", erreur);
+				erreursList.add("Vous devez saisir un nom");
+				erreurs.put("nom", "Le nom n'a pas été saisi");
+			}
+			if(age < 0) {
+				erreursList.add("L age ne peut pas etre negatif");
+				erreurs.put("age", "L'age ne peut pas etre negatif");
+			}
+			
+			request.setAttribute("erreurs", erreurs);
+
+			if (!erreurs.isEmpty()) {
+				
+				message = "Formulaire non valide";
+				request.setAttribute("message", message);
 				
 				RequestDispatcher rd = request.getRequestDispatcher("/SaisieInscription.jsp");
 				rd.forward(request, response);
-				
 			} else {
 				request.setAttribute("nom", nom);
 				request.setAttribute("prenom", prenom);
 				request.setAttribute("age", age);
+				
+				message = "Saisie correcte";
+				request.setAttribute("message", message);
+				
 				RequestDispatcher rd = request.getRequestDispatcher("/Ok.jsp");
 				rd.forward(request, response);
 			}
-
 		}
 
 	}
