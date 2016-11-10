@@ -7,8 +7,11 @@
 <title>Insert title here</title>
 </head>
 <body>
+	${heureConnexion} <br>
 	Nom : ${ nom } <br>
 	Prenom : ${ prenom } <br>
 	Age : ${ age } <br>
+	
+	
 </body>
 </html>
