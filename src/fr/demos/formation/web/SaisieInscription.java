@@ -51,11 +51,11 @@ public class SaisieInscription extends HttpServlet {
 		listePays.add("Canada");
 		request.setAttribute("listePays", listePays);
 
-		LocalTime time = LocalTime.now();
-		HttpSession session = request.getSession();
-		if (session.getAttribute("heureConnexion") == null) {
-			session.setAttribute("heureConnexion", time);
-		}
+//		LocalTime time = LocalTime.now();
+//		HttpSession session = request.getSession();
+//		if (session.getAttribute("heureConnexion") == null) {
+//			session.setAttribute("heureConnexion", time);
+//		}
 
 		RequestDispatcher rd = request.getRequestDispatcher("/SaisieInscription.jsp");
 		rd.forward(request, response);

@@ -15,7 +15,8 @@
 </style>
 </head>
 <body>
-
+	<p>${ liste }</p>
+	<p> Vous êtes ${ compteur.valeur } utilisateurs</p>
 	<p>${heureConnexion}</p>
 	<br>
 	<form action="" method="post">
